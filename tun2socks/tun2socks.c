@@ -333,6 +333,15 @@ int main (int argc, char **argv)
         goto fail1;
     }
     
+    // register wake hook for embed mode with crystal
+    #ifdef TUN2SOCKS_EMBED_WAKE_HOOK
+    extern int tun2socks_embed_register_wake(void *reactor /* BReactor* */);
+    if (!tun2socks_embed_register_wake(&ss)) {
+        BLog(BLOG_ERROR, "tun2socks_embed_register_wake failed");
+        goto fail1;
+    }
+    #endif
+    
     // set not quitting
     quitting = 0;
     
